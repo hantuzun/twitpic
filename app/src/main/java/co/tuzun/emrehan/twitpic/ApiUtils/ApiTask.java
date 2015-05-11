@@ -1,9 +1,13 @@
 package co.tuzun.emrehan.twitpic.ApiUtils;
 
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Environment;
 import android.util.Log;
+
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -108,11 +112,7 @@ public class ApiTask extends AsyncTask<String, String, Void> {
                     InputStream input = url.openStream();
                     try {
 
-                        File folder = new File(App.outputFolder);
-                        if(!folder.exists()){
-                            folder.mkdir();
-                        }
-                        File outputFile = new File(folder, id + ".jpg");
+                        File outputFile = new File(App.outputFolder, id + ".jpg");
                         OutputStream output = new FileOutputStream(outputFile.getPath());
                         try {
                             byte[] buffer = new byte[8096];
@@ -180,5 +180,37 @@ public class ApiTask extends AsyncTask<String, String, Void> {
         task.setParams(uid);
         task.run();
     }
+
+    ApiTask.postTweet(getApplicationContext(), new ApiListener() {
+        @Override
+        public void onSuccess(String text) {
+
+            try {
+                JSONObject jsonReader = new JSONObject(text);
+                String image = jsonReader.getString("image");
+                String id = jsonReader.getString("id");
+
+                File outputFile = new File(App.outputFolder, id + ".jpg");
+                Uri myImageUri = Uri.fromFile(outputFile);
+                Log.d("imagefile", myImageUri.toString());
+
+                Intent intent = new TweetComposer.Builder(Auth.this)
+                        .text("Sending my first tweet.")
+                        .image(myImageUri)
+                        .createIntent();
+
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                startActivity(intent);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        @Override
+        public void onFail(String text) {
+
+        }
+    }, composeEditText.getText().toString());
 
 }

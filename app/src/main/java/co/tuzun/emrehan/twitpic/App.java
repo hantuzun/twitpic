@@ -1,6 +1,8 @@
 package co.tuzun.emrehan.twitpic;
 
 import android.app.Application;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.os.Environment;
 
 import com.twitter.sdk.android.Twitter;
@@ -24,8 +26,7 @@ public class App extends Application{
     private static final String TWITTER_KEY = "WSeOfkuyAoeubIaq9c8HvTLoa";
     private static final String TWITTER_SECRET = "YC1XTxms5Lg5v6j75WNNrio7g0R4RW4UDZQlIlblJw0xB5VYYK";
 
-    public static File storagePath;
-    public static String outputFolder;
+    public static File outputFolder;
 
     public static App getInstance() {
         return singleton;
@@ -36,7 +37,13 @@ public class App extends Application{
         super.onCreate();
         singleton = this;
 
-        App.outputFolder = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS) + "/TwitPic";
+        ContextWrapper cw = new ContextWrapper(getApplicationContext());
+        // path to /data/data/yourapp/app_data/imageDir
+        App.outputFolder = new File(cw.getExternalFilesDir(null), "twitpic");
+        if(!App.outputFolder.exists()){
+            App.outputFolder.mkdir();
+        }
+        // Create imageDir
         /* Twitter */
         authConfig = new TwitterAuthConfig(TWITTER_KEY, TWITTER_SECRET);
         Fabric.with(this, new Twitter(authConfig));
