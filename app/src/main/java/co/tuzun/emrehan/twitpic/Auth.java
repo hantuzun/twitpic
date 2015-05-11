@@ -27,6 +27,7 @@ public class Auth extends ActionBarActivity {
     private TwitterLoginButton loginButton;
     private Button composeButton;
     private EditText composeEditText;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,9 +42,11 @@ public class Auth extends ActionBarActivity {
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
-                loginButton.setVisibility(View.GONE);
-                Toast.makeText(getApplicationContext(),"Welcome " + result.data.getUserName(), Toast.LENGTH_SHORT).show();
-                Log.d("token", result.data.getAuthToken().token + " " + result.data.getAuthToken().secret);
+                Toast.makeText(getApplicationContext(),
+                        "Login: twitter account active" + result.data,
+                        Toast.LENGTH_SHORT).show();
+                intent = new Intent(getApplicationContext(), TweetActivity.class);
+                startActivity(intent);
             }
 
             @Override
