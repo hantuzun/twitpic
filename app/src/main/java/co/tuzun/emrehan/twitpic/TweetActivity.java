@@ -1,10 +1,11 @@
 package co.tuzun.emrehan.twitpic;
 
-import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.support.v7.app.ActionBarActivity;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -12,6 +13,16 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.twitter.sdk.android.tweetcomposer.TweetComposer;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
+
+import co.tuzun.emrehan.twitpic.ApiUtils.ApiListener;
+import co.tuzun.emrehan.twitpic.ApiUtils.ApiTask;
 
 
 public class TweetActivity extends ActionBarActivity {
@@ -32,10 +43,6 @@ public class TweetActivity extends ActionBarActivity {
 
         tweetpicButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-                Toast.makeText(getApplicationContext(),
-                        "TweetPic this: " + editText.getText(),
-                        Toast.LENGTH_SHORT).show();
-
                 // Create generating dialog
                 generatingDialog.setMessage("Generating TweetPic Image...");
                 generatingDialog.setIndeterminate(true);
@@ -46,6 +53,37 @@ public class TweetActivity extends ActionBarActivity {
                 InputMethodManager imm = (InputMethodManager)getSystemService(
                         getApplicationContext().INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
+
+
+                ApiTask.postTweet(getApplicationContext(), new ApiListener() {
+                    @Override
+                    public void onSuccess(String text) {
+                        try {
+                            JSONObject jsonReader = new JSONObject(text);
+                            String id = jsonReader.getString("id");
+
+                            File outputFile = new File(App.outputFolder, id + ".jpg");
+                            Uri myImageUri = Uri.fromFile(outputFile);
+                            Log.d("imagefile", myImageUri.toString());
+
+                            Intent intent = new TweetComposer.Builder(TweetActivity.this)
+                                                            .image(myImageUri)
+                                                            .createIntent();
+
+                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivity(intent);
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        } finally {
+                            generatingDialog.cancel();
+                        }
+                    }
+
+                    @Override
+                    public void onFail(String text) {
+                        generatingDialog.cancel();
+                    }
+                }, editText.getText().toString());
             }
         });
     }

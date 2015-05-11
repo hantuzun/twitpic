@@ -11,22 +11,4 @@
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"/>
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Compose"
-        android:id="@+id/composeButton"
-        android:layout_below="@+id/twitter_login_button"
-        android:layout_centerHorizontal="true" />
-
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/composeEditText"
-        android:layout_below="@+id/twitter_login_button"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_toLeftOf="@+id/composeButton"
-        android:layout_toStartOf="@+id/composeButton" />
-
 </RelativeLayout>

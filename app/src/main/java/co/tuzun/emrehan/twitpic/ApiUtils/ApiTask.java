@@ -1,13 +1,8 @@
 package co.tuzun.emrehan.twitpic.ApiUtils;
 
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.os.AsyncTask;
-import android.os.Environment;
 import android.util.Log;
-
-import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -31,12 +26,10 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
 import java.net.URLDecoder;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
 import co.tuzun.emrehan.twitpic.App;
-import retrofit.http.POST;
 
 public class ApiTask extends AsyncTask<String, String, Void> {
     private static final String TAG = "apitask";
@@ -180,37 +173,5 @@ public class ApiTask extends AsyncTask<String, String, Void> {
         task.setParams(uid);
         task.run();
     }
-
-    ApiTask.postTweet(getApplicationContext(), new ApiListener() {
-        @Override
-        public void onSuccess(String text) {
-
-            try {
-                JSONObject jsonReader = new JSONObject(text);
-                String image = jsonReader.getString("image");
-                String id = jsonReader.getString("id");
-
-                File outputFile = new File(App.outputFolder, id + ".jpg");
-                Uri myImageUri = Uri.fromFile(outputFile);
-                Log.d("imagefile", myImageUri.toString());
-
-                Intent intent = new TweetComposer.Builder(Auth.this)
-                        .text("Sending my first tweet.")
-                        .image(myImageUri)
-                        .createIntent();
-
-                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }
-
-        @Override
-        public void onFail(String text) {
-
-        }
-    }, composeEditText.getText().toString());
 
 }

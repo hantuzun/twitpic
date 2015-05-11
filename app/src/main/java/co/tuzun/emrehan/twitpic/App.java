@@ -1,9 +1,7 @@
 package co.tuzun.emrehan.twitpic;
 
 import android.app.Application;
-import android.content.Context;
 import android.content.ContextWrapper;
-import android.os.Environment;
 
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
