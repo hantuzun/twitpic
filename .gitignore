@@ -7,6 +7,12 @@
 
 # Created by https://www.gitignore.io
 
+
+### Intellij ###
+.idea/
+*.iml
+*.iws
+
 ### Android ###
 # Built application files
 *.apk
