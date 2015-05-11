@@ -31,6 +31,7 @@ public class TweetActivity extends ActionBarActivity {
     private Button tweetpicButton;
     private EditText editText;
     private ProgressDialog generatingDialog;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -66,12 +67,14 @@ public class TweetActivity extends ActionBarActivity {
                             Uri myImageUri = Uri.fromFile(outputFile);
                             Log.d("imagefile", myImageUri.toString());
 
-                            Intent intent = new TweetComposer.Builder(TweetActivity.this)
+                            intent = new TweetComposer.Builder(TweetActivity.this)
                                                             .image(myImageUri)
                                                             .createIntent();
 
                             intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivity(intent);
+
+                            startActivity( new Intent(getApplicationContext(), SuccessActivity.class) );
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } finally {
