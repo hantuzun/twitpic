@@ -16,8 +16,7 @@ android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".TweetAct
         android:layout_alignParentEnd="true"
         android:enabled="true"
         android:background="#ff6fbbf4"
-        android:textColor="#ffffffff"
-        android:ellipsize="end" />
+        android:textColor="#ffffffff" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -28,21 +27,28 @@ android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".TweetAct
         android:layout_below="@+id/tweetpic_button"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="23dp"
+        android:layout_marginTop="20dp"
         android:layout_alignRight="@+id/tweetpic_button"
         android:layout_alignEnd="@+id/tweetpic_button"
         android:layout_alignParentBottom="true"
-        android:text="What&apos;s happening?" />
+        android:hint="What&apos;s happening?"
+        android:nestedScrollingEnabled="true"
+        android:gravity="left|top" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:text="TweetPic longer texts!"
+        android:text="Tweet a lot of characters!"
         android:id="@+id/tweetpic_textView"
-        android:layout_alignParentTop="true"
+        android:textColor="@android:color/black"
+        android:layout_alignTop="@+id/tweetpic_button"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:textColor="@android:color/black" />
+        android:layout_above="@+id/tweetpic_text"
+        android:focusableInTouchMode="true"
+        android:gravity="center"
+        android:layout_toLeftOf="@+id/tweetpic_button"
+        android:layout_toStartOf="@+id/tweetpic_button" />
 
 </RelativeLayout>
