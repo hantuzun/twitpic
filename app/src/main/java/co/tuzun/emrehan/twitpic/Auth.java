@@ -16,6 +16,7 @@ import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 public class Auth extends ActionBarActivity {
 
     private TwitterLoginButton loginButton;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,6 +31,8 @@ public class Auth extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(),
                         "Login: twitter account active" + result.data,
                         Toast.LENGTH_SHORT).show();
+                intent = new Intent(getApplicationContext(), TweetActivity.class);
+                startActivity(intent);
             }
 
             @Override
