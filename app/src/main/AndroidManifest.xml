@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="co.tuzun.emrehan.twitpic" >
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+
     <application
         android:name=".App"
         android:allowBackup="true"
@@ -22,5 +26,4 @@
             android:value="a1db236384141324c3692e9e04999176d64c645a" />
     </application>
 
-    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
