@@ -128,6 +128,9 @@ public class TweetActivity extends ActionBarActivity {
             Log.d("result", resultCode + "");
             if(resultCode == Activity.RESULT_OK){
                 finishActivity(Activity.RESULT_OK);
+
+                Intent intent = new Intent(getApplicationContext(), TimelineActivity.class);
+                startActivity(intent);
             }
         }
     }
