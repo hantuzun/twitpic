@@ -16,7 +16,8 @@
         android:layout_alignParentEnd="true"
         android:enabled="true"
         android:background="@color/twitter_blue"
-        android:textColor="#ffffffff" />
+        android:textColor="#ffffffff"
+        android:textAllCaps="false" />
 
     <EditText
         android:layout_width="wrap_content"

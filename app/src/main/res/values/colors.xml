@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <color name="divider_gray">#AAAAAA</color>
+    <color name="dark_gray">#565656</color>
     <color name="primary">#5677fc</color>
     <color name="primary_pressed">#5677fc</color>
     <color name="ripple">#5677fc</color>

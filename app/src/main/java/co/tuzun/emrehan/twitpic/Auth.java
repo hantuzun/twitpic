@@ -42,9 +42,6 @@ public class Auth extends ActionBarActivity {
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
-                Toast.makeText(getApplicationContext(),
-                        "Login: twitter account active" + result.data,
-                        Toast.LENGTH_SHORT).show();
                 intent = new Intent(getApplicationContext(), TimelineActivity.class);
                 startActivity(intent);
                 finish();
@@ -53,7 +50,7 @@ public class Auth extends ActionBarActivity {
             @Override
             public void failure(TwitterException exception) {
                 Toast.makeText(getApplicationContext(),
-                        "Login failed",
+                        "Login failed, try again",
                         Toast.LENGTH_SHORT).show();
             }
         });
