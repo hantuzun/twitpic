@@ -6,6 +6,7 @@ import android.content.ContextWrapper;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterAuthToken;
+import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterSession;
 
 import java.io.File;
@@ -49,9 +50,7 @@ public class App extends Application{
     }
 
     public static TwitterSession getTwitterSession(){
-        TwitterSession session =
-                Twitter.getSessionManager().getActiveSession();
-        return session;
+        return TwitterCore.getInstance().getSessionManager().getActiveSession();
     }
 
     public static String getToken(){

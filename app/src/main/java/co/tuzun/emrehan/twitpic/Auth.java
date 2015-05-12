@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -17,6 +18,7 @@ import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.core.models.User;
 
 public class Auth extends ActionBarActivity {
 
@@ -35,10 +37,9 @@ public class Auth extends ActionBarActivity {
 
         AnimationDrawable openingAnimation = (AnimationDrawable) backgroundView.getDrawable();
         openingAnimation.start();
-
         backgroundView.setScaleType(ImageView.ScaleType.FIT_XY);
-        loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
 
+        loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {

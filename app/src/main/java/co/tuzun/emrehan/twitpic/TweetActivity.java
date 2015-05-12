@@ -24,7 +24,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.Callback;
+import com.twitter.sdk.android.core.Result;
 import com.twitter.sdk.android.core.TwitterCore;
+import com.twitter.sdk.android.core.TwitterException;
+import com.twitter.sdk.android.core.identity.TwitterLoginButton;
+import com.twitter.sdk.android.core.models.User;
+import com.twitter.sdk.android.core.services.AccountService;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import org.json.JSONException;
@@ -38,6 +44,7 @@ import java.net.URL;
 
 import co.tuzun.emrehan.twitpic.ApiUtils.ApiListener;
 import co.tuzun.emrehan.twitpic.ApiUtils.ApiTask;
+import co.tuzun.emrehan.twitpic.ApiUtils.MyTwitterApiClient;
 
 
 public class TweetActivity extends ActionBarActivity {
@@ -48,7 +55,6 @@ public class TweetActivity extends ActionBarActivity {
     private EditText editText;
     private ProgressDialog generatingDialog;
 
-    private Bitmap bitmap;
     private ImageView userImage;
     private TextView userName;
     private TextView userHandle;
@@ -58,19 +64,37 @@ public class TweetActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tweet);
 
-        getSupportActionBar().hide();
-
-        new LongOperation().execute("");
-
-        userName = (TextView) findViewById(R.id.tweetpic_userName);
-        userName.setText(TwitterCore.getInstance().getSessionManager().getActiveSession().getUserName());
-
-        userHandle = (TextView) findViewById(R.id.tweetpic_userHandle);
-        userHandle.setText("@" + TwitterCore.getInstance().getSessionManager().getActiveSession().getUserId());
-
-        editText = (EditText) findViewById(R.id.tweetpic_text);
         tweetpicButton = (Button) findViewById(R.id.tweetpic_button);
         generatingDialog = new ProgressDialog(this);
+        getSupportActionBar().hide();
+
+        editText = (EditText) findViewById(R.id.tweetpic_text);
+
+        Long uid = TwitterCore.getInstance().getSessionManager().getActiveSession().getUserId();
+        new MyTwitterApiClient(TwitterCore.getInstance().getSessionManager().getActiveSession()).getUsersService().show(uid, null, true,
+                new Callback<User>() {
+                    @Override
+                    public void success(Result<User> result) {
+
+                        userName = (TextView) findViewById(R.id.tweetpic_userName);
+                        userName.setText(result.data.screenName);
+
+                        userHandle = (TextView) findViewById(R.id.tweetpic_userHandle);
+                        userHandle.setText("@" + result.data.name);
+                        
+                        Log.d("twittercommunity", "user's profile url is "
+                                + result.data.profileImageUrlHttps);
+
+                        new InstallImage().execute(result.data.profileImageUrlHttps);
+                    }
+
+                    @Override
+                    public void failure(TwitterException exception) {
+                        Log.d("twittercommunity", "exception is " + exception);
+                    }
+                });
+
+
 
         tweetpicButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
@@ -103,7 +127,6 @@ public class TweetActivity extends ActionBarActivity {
                                     .createIntent();
 
 
-                            //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                             startActivityForResult(intent, TWEET_COMPOSER_REQUEST_CODE);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -158,22 +181,24 @@ public class TweetActivity extends ActionBarActivity {
     }
 
 
-    private class LongOperation extends AsyncTask<String, Void, String> {
-
+    private class InstallImage extends AsyncTask<String, Void, Boolean> {
+        private Bitmap bitmap;
         @Override
-        protected String doInBackground(String... params) {
+        protected Boolean doInBackground(String... params) {
             try {
-                bitmap = BitmapFactory.decodeStream((InputStream) new URL("https://pbs.twimg.com/profile_images/561884218767052800/qDebg39S_200x200.jpeg").getContent());
-                return "Executed.";
+                bitmap = BitmapFactory.decodeStream((InputStream) new URL(params[0]).getContent());
+                return true;
             } catch (Exception e) {
-                return "Exception!";
+                return false;
             }
         }
 
         @Override
-        protected void onPostExecute(String result) {
-            userImage = (ImageView) findViewById(R.id.tweetpic_userPicture);
-            userImage.setImageBitmap(bitmap);
+        protected void onPostExecute(Boolean result) {
+            if (result == true) {
+                userImage = (ImageView) findViewById(R.id.tweetpic_userPicture);
+                userImage.setImageBitmap(bitmap);
+            }
         }
 
         @Override
