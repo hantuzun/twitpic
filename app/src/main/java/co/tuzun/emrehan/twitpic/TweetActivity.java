@@ -127,7 +127,7 @@ public class TweetActivity extends ActionBarActivity {
         if(requestCode == TWEET_COMPOSER_REQUEST_CODE){
             Log.d("result", resultCode + "");
             if(resultCode == Activity.RESULT_OK){
-
+                finishActivity(Activity.RESULT_OK);
             }
         }
     }

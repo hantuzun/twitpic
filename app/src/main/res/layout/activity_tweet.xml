@@ -21,7 +21,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine|textCapSentences"
+        android:inputType="textCapSentences|textMultiLine"
         android:ems="10"
         android:id="@+id/tweetpic_text"
         android:layout_below="@+id/tweetpic_button"
