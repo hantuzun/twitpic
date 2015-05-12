@@ -34,6 +34,7 @@ public class TweetActivity extends ActionBarActivity {
     private EditText editText;
     private ProgressDialog generatingDialog;
     private static final int TWEET_COMPOSER_REQUEST_CODE = 145;
+    private Intent intent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -70,6 +71,7 @@ public class TweetActivity extends ActionBarActivity {
                             Log.d("imagefile", myImageUri.toString());
 
                             Intent intent = new TweetComposer.Builder(TweetActivity.this)
+                                    .text(editText.getText().toString().substring(0, Math.min(editText.getText().toString().length(), 118)))
                                     .image(myImageUri)
                                     .createIntent();
 
