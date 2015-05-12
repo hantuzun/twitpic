@@ -50,7 +50,7 @@ public class App extends Application{
     }
 
     public static TwitterSession getTwitterSession(){
-        return TwitterCore.getInstance().getSessionManager().getActiveSession();
+        return Twitter.getSessionManager().getActiveSession();
     }
 
     public static String getToken(){

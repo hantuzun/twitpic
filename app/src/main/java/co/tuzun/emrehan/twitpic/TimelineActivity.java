@@ -47,7 +47,7 @@ public class TimelineActivity extends ListActivity {
 
     protected void createList() {
         final UserTimeline userTimeline = new UserTimeline.Builder()
-                .screenName(TwitterCore.getInstance().getSessionManager().getActiveSession().getUserName())
+                .screenName(App.getTwitterSession().getUserName())
                 .build();
         final TweetTimelineListAdapter adapter = new TweetTimelineListAdapter(this, userTimeline);
         setListAdapter(adapter);

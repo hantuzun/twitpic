@@ -70,18 +70,24 @@ public class TweetActivity extends ActionBarActivity {
 
         editText = (EditText) findViewById(R.id.tweetpic_text);
 
-        Long uid = TwitterCore.getInstance().getSessionManager().getActiveSession().getUserId();
-        new MyTwitterApiClient(TwitterCore.getInstance().getSessionManager().getActiveSession()).getUsersService().show(uid, null, true,
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
+
+        Long uid = App.getTwitterSession().getUserId();
+        new MyTwitterApiClient(App.getTwitterSession()).getUsersService().show(uid, null, true,
                 new Callback<User>() {
                     @Override
                     public void success(Result<User> result) {
 
                         userName = (TextView) findViewById(R.id.tweetpic_userName);
-                        userName.setText(result.data.screenName);
+                        userName.setText(result.data.name);
 
                         userHandle = (TextView) findViewById(R.id.tweetpic_userHandle);
-                        userHandle.setText("@" + result.data.name);
-                        
+                        userHandle.setText("@" + result.data.screenName);
+
                         Log.d("twittercommunity", "user's profile url is "
                                 + result.data.profileImageUrlHttps);
 
@@ -122,7 +128,7 @@ public class TweetActivity extends ActionBarActivity {
                             Log.d("imagefile", myImageUri.toString());
 
                             Intent intent = new TweetComposer.Builder(TweetActivity.this)
-                                    .text(editText.getText().toString().substring(0, Math.min(editText.getText().toString().length(), 118)))
+                                    .text(editText.getText().toString().substring(0, Math.min(editText.getText().toString().length(), 117)))
                                     .image(myImageUri)
                                     .createIntent();
 

@@ -2,11 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".TweetActivity">
+    android:paddingBottom="@dimen/activity_vertical_margin" tools:context=".TweetActivity"
+    android:paddingTop="10dp">
 
 
     <Button
+        android:textSize="16dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="TwitPic"
@@ -15,9 +16,19 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
         android:enabled="true"
-        android:background="@color/twitter_blue"
+        android:background="@drawable/rounded_button"
         android:textColor="#ffffffff"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        android:minHeight="10dp"
+        android:layout_alignBottom="@+id/tweetpic_userHandle"
+        android:maxWidth="20dp"
+        android:layout_marginRight="0dp"
+        android:layout_marginTop="0dp"
+        android:layout_marginBottom="0dp"
+        android:padding="0dp"
+        android:gravity="center"
+        android:layout_margin="0dp"
+        android:layout_marginLeft="0dp" />
 
     <EditText
         android:layout_width="wrap_content"
@@ -25,40 +36,46 @@
         android:inputType="textCapSentences|textMultiLine"
         android:ems="10"
         android:id="@+id/tweetpic_text"
+        android:hint="What&apos;s happening?"
+        android:nestedScrollingEnabled="true"
+        android:gravity="left|top"
         android:layout_below="@+id/tweetpic_button"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_marginTop="20dp"
+        android:layout_marginTop="18dp"
         android:layout_alignRight="@+id/tweetpic_button"
         android:layout_alignEnd="@+id/tweetpic_button"
-        android:hint="What&apos;s happening?"
-        android:nestedScrollingEnabled="true"
-        android:gravity="left|top" />
+        android:background="@android:color/transparent"/>
 
 
     <ImageView
-        android:layout_width="56dp"
+        android:src="@drawable/rounded_avatar"
+        android:layout_width="48dp"
         android:layout_height="wrap_content"
         android:id="@+id/tweetpic_userPicture"
-        android:layout_alignParentTop="true"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
-        android:layout_alignBottom="@+id/tweetpic_button"
         android:focusableInTouchMode="false"
         android:nestedScrollingEnabled="false"
         android:scaleType="fitStart"
-        android:maxWidth="56dp"
-        android:minWidth="56dp" />
+        android:maxWidth="40dp"
+        android:minWidth="40dp"
+        android:minHeight="40dp"
+        android:maxHeight="40dp"
+        android:paddingTop="4dp"
+        android:paddingLeft="0dp"
+        android:paddingRight="0dp"
+        android:paddingBottom="0dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
+        android:textSize="16dp"
         android:id="@+id/tweetpic_userName"
         android:textStyle="bold"
         android:textColor="@color/primary_dark_material_dark"
-        android:layout_alignTop="@+id/tweetpic_userPicture"
         android:layout_toRightOf="@+id/tweetpic_userPicture"
         android:layout_toEndOf="@+id/tweetpic_userPicture" />
 
@@ -68,11 +85,12 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         android:text="Small Text"
+        android:textSize="13dp"
         android:id="@+id/tweetpic_userHandle"
         android:textStyle="normal"
         android:textColor="@color/tw__tweet_light_primary_text_color"
-        android:layout_alignBottom="@+id/tweetpic_userPicture"
-        android:layout_toRightOf="@+id/tweetpic_userPicture"
-        android:layout_toEndOf="@+id/tweetpic_userPicture" />
+        android:layout_below="@+id/tweetpic_userName"
+        android:layout_alignLeft="@+id/tweetpic_userName"
+        android:layout_alignStart="@+id/tweetpic_userName" />
 
 </RelativeLayout>
