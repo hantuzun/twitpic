@@ -21,7 +21,7 @@
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:inputType="textMultiLine|textCapSentences"
+        android:inputType="textCapSentences|textMultiLine"
         android:ems="10"
         android:id="@+id/tweetpic_text"
         android:layout_below="@+id/tweetpic_button"
@@ -30,7 +30,6 @@
         android:layout_marginTop="20dp"
         android:layout_alignRight="@+id/tweetpic_button"
         android:layout_alignEnd="@+id/tweetpic_button"
-        android:layout_alignParentBottom="true"
         android:hint="What&apos;s happening?"
         android:nestedScrollingEnabled="true"
         android:gravity="left|top" />
@@ -57,7 +56,7 @@
         android:text="Small Text"
         android:id="@+id/tweetpic_userName"
         android:textStyle="bold"
-        android:textColor="@color/dark"
+        android:textColor="@color/primary_dark_material_dark"
         android:layout_alignTop="@+id/tweetpic_userPicture"
         android:layout_toRightOf="@+id/tweetpic_userPicture"
         android:layout_toEndOf="@+id/tweetpic_userPicture" />
