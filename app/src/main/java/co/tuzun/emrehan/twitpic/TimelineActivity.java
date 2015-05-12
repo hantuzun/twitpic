@@ -17,16 +17,14 @@ public class TimelineActivity extends ListActivity {
 
 
     SwipeRefreshLayout refreshLayout;
-    FloatingActionButton sendButton;
-
-    FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+    FloatingActionButton fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.timeline);
 
-
+        fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
