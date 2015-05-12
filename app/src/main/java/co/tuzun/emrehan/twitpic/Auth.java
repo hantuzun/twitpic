@@ -5,10 +5,13 @@ import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
+import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
@@ -23,7 +26,6 @@ public class Auth extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
 
         loginButton.setCallback(new Callback<TwitterSession>() {
@@ -32,8 +34,9 @@ public class Auth extends ActionBarActivity {
                 Toast.makeText(getApplicationContext(),
                         "Login: twitter account active" + result.data,
                         Toast.LENGTH_SHORT).show();
-                intent = new Intent(getApplicationContext(), TweetActivity.class);
+                intent = new Intent(getApplicationContext(), TimelineActivity.class);
                 startActivity(intent);
+                finish();
             }
 
             @Override

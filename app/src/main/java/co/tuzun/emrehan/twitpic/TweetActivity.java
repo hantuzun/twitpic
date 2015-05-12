@@ -1,5 +1,6 @@
 package co.tuzun.emrehan.twitpic;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.net.Uri;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import org.json.JSONException;
@@ -31,6 +33,7 @@ public class TweetActivity extends ActionBarActivity {
     private Button tweetpicButton;
     private EditText editText;
     private ProgressDialog generatingDialog;
+    private static final int TWEET_COMPOSER_REQUEST_CODE = 145;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -67,11 +70,12 @@ public class TweetActivity extends ActionBarActivity {
                             Log.d("imagefile", myImageUri.toString());
 
                             Intent intent = new TweetComposer.Builder(TweetActivity.this)
-                                                            .image(myImageUri)
-                                                            .createIntent();
+                                    .image(myImageUri)
+                                    .createIntent();
 
-                            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                            startActivity(intent);
+
+                            //intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                            startActivityForResult(intent, TWEET_COMPOSER_REQUEST_CODE);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         } finally {
@@ -86,6 +90,17 @@ public class TweetActivity extends ActionBarActivity {
                 }, editText.getText().toString());
             }
         });
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == TWEET_COMPOSER_REQUEST_CODE){
+            Log.d("result", resultCode + "");
+            if(resultCode == Activity.RESULT_OK){
+
+            }
+        }
     }
 
     @Override
