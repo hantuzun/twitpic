@@ -2,8 +2,14 @@ package co.tuzun.emrehan.twitpic;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
+import android.content.Context;
+import android.content.ContextWrapper;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
@@ -13,15 +19,22 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.twitter.sdk.android.Twitter;
+import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
 
 import co.tuzun.emrehan.twitpic.ApiUtils.ApiListener;
 import co.tuzun.emrehan.twitpic.ApiUtils.ApiTask;
@@ -29,17 +42,31 @@ import co.tuzun.emrehan.twitpic.ApiUtils.ApiTask;
 
 public class TweetActivity extends ActionBarActivity {
 
+    private static final int TWEET_COMPOSER_REQUEST_CODE = 145;
 
     private Button tweetpicButton;
     private EditText editText;
     private ProgressDialog generatingDialog;
-    private static final int TWEET_COMPOSER_REQUEST_CODE = 145;
-    private Intent intent;
+
+    private Bitmap bitmap;
+    private ImageView userImage;
+    private TextView userName;
+    private TextView userHandle;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tweet);
+
+        getSupportActionBar().hide();
+
+        new LongOperation().execute("");
+
+        userName = (TextView) findViewById(R.id.tweetpic_userName);
+        userName.setText(TwitterCore.getInstance().getSessionManager().getActiveSession().getUserName());
+
+        userHandle = (TextView) findViewById(R.id.tweetpic_userHandle);
+        userHandle.setText("@" + TwitterCore.getInstance().getSessionManager().getActiveSession().getUserId());
 
         editText = (EditText) findViewById(R.id.tweetpic_text);
         tweetpicButton = (Button) findViewById(R.id.tweetpic_button);
@@ -54,7 +81,7 @@ public class TweetActivity extends ActionBarActivity {
                 generatingDialog.show();
 
                 // Hide keyboard
-                InputMethodManager imm = (InputMethodManager)getSystemService(
+                InputMethodManager imm = (InputMethodManager) getSystemService(
                         getApplicationContext().INPUT_METHOD_SERVICE);
                 imm.hideSoftInputFromWindow(editText.getWindowToken(), 0);
 
@@ -125,6 +152,32 @@ public class TweetActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+
+    private class LongOperation extends AsyncTask<String, Void, String> {
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                bitmap = BitmapFactory.decodeStream((InputStream) new URL("https://pbs.twimg.com/profile_images/561884218767052800/qDebg39S_200x200.jpeg").getContent());
+                return "Executed.";
+            } catch (Exception e) {
+                return "Exception!";
+            }
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            userImage = (ImageView) findViewById(R.id.tweetpic_userPicture);
+            userImage.setImageBitmap(bitmap);
+        }
+
+        @Override
+        protected void onPreExecute() {}
+
+        @Override
+        protected void onProgressUpdate(Void... values) {}
     }
 }
 
