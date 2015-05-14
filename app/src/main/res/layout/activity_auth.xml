@@ -4,52 +4,52 @@
     android:background="@color/dark_gray"
     tools:context=".Auth">
 
-    <ImageView
+    <SurfaceView
+        android:id="@+id/surface"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:id="@+id/imageView"
+        android:paddingTop="10dip" />
+
+    <TextView
+        android:textColor="@android:color/white"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="TwitPic"
+        android:id="@+id/textView2"
+        android:gravity="center"
+        android:layout_marginTop="35dp"
         android:layout_alignParentTop="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:scaleType="centerInside" />
+        android:layout_centerHorizontal="true" />
 
-        <TextView
-            android:textColor="@android:color/white"
-            android:textSize="24dp"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="TwitPic"
-            android:id="@+id/textView2"
-            android:gravity="center"
-            android:layout_marginTop="40dp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+    <TextView
+        android:textColor="@android:color/white"
+        android:textSize="24dp"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:text="More than a tweet"
+        android:id="@+id/textView"
+        android:gravity="center"
+        android:layout_below="@+id/textView2"
+        android:layout_alignRight="@+id/twitter_login_button"
+        android:layout_alignEnd="@+id/twitter_login_button"
+        android:layout_alignLeft="@+id/twitter_login_button"
+        android:layout_alignStart="@+id/twitter_login_button"
+        android:layout_marginTop="20dp" />
 
-        <TextView
-            android:textColor="@android:color/white"
-            android:textSize="24dp"
-            android:textStyle="bold"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceMedium"
-            android:text="More than a tweet"
-            android:id="@+id/textView"
-            android:gravity="center"
-            android:layout_marginBottom="98dp"
-            android:layout_above="@+id/twitter_login_button"
-            android:layout_centerHorizontal="true" />
-
-        <com.twitter.sdk.android.core.identity.TwitterLoginButton
-            android:id="@+id/twitter_login_button"
-            android:textSize="24dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:visibility="visible"
-            android:layout_marginBottom="139dp"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true"
-            android:textAllCaps="false"/>
+    <com.twitter.sdk.android.core.identity.TwitterLoginButton
+        android:id="@+id/twitter_login_button"
+        android:textSize="24dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="visible"
+        android:layout_marginBottom="139dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:textAllCaps="false"/>
 
 </RelativeLayout>

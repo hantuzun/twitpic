@@ -2,15 +2,20 @@ package co.tuzun.emrehan.twitpic;
 
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.MediaPlayer;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.VideoView;
 
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
@@ -20,10 +25,15 @@ import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import com.twitter.sdk.android.core.models.User;
 
-public class Auth extends ActionBarActivity {
+import java.io.IOException;
+
+public class AuthActivity extends ActionBarActivity implements SurfaceHolder.Callback {
 
     private TwitterLoginButton loginButton;
     private Intent intent;
+    private MediaPlayer mp = null;
+    SurfaceView mSurfaceView=null;
+    private SurfaceHolder holder;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -31,13 +41,13 @@ public class Auth extends ActionBarActivity {
         setContentView(R.layout.activity_auth);
 
         getSupportActionBar().hide();
-        ImageView backgroundView = (ImageView)findViewById(R.id.imageView);
-        backgroundView.setImageResource(R.drawable.opening);
-        backgroundView.setScaleType(ImageView.ScaleType.FIT_XY);
+        mSurfaceView = (SurfaceView)findViewById(R.id.surface);
+        mp = new MediaPlayer();
 
-        AnimationDrawable openingAnimation = (AnimationDrawable) backgroundView.getDrawable();
-        openingAnimation.start();
-        backgroundView.setScaleType(ImageView.ScaleType.FIT_XY);
+        holder = mSurfaceView.getHolder();
+        holder.setFixedSize(800, 480);
+        holder.addCallback(this);
+        holder.setType(SurfaceHolder.SURFACE_TYPE_PUSH_BUFFERS);
 
         loginButton = (TwitterLoginButton) findViewById(R.id.twitter_login_button);
         loginButton.setCallback(new Callback<TwitterSession>() {
@@ -84,5 +94,42 @@ public class Auth extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+        Uri video = Uri.parse("android.resource://co.tuzun.emrehan.twitpic/"
+                + R.raw.newyork);
+
+        try {
+            mp.setDisplay(holder);
+            mp.setDataSource(this, video);
+            mp.prepare();
+            mp.setLooping(true);
+            Log.d("video", "" + video.toString());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+        //Get the dimensions of the video
+        int videoWidth = mp.getVideoHeight();
+        int videoHeight = mp.getVideoWidth();
+        Log.d("video", "" + videoWidth + " " + videoHeight);
+
+
+        //Start video
+        mp.start();
+        Log.d("video", "" + mp.isPlaying());
+    }
+
+    @Override
+    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+
+    }
+
+    @Override
+    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+
     }
 }
