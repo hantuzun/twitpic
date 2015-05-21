@@ -14,3 +14,4 @@ https://twitter.com/EmrehanTuzun/status/598254931641036800
  - Reply to a tweet.
  - Find a way to redirect the user from twitter application to twitpic for just tweeting.
  - Extract mentions, hashtags and links from the tweet and add as a normal text in tweet composer.
+  - This item is done partially on the server side. Need to add UI feature.
