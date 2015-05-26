@@ -1,7 +1,7 @@
 # TwitPic
 TwitPic lets you tweet longer texts in an embedded image.
 
-This app has got the third place in Hackingfest Ankara Hackathon, 2015.
+We've got the third place with this app at [Hackingfest Ankara](http://hackingfest.com/sehirler/ankara.html).
 
 
 ## Example Tweets
@@ -15,6 +15,7 @@ http://slides.com/emrehan/twitpic
 
 
 ## To Do
+ - Write tests.
  - Open tweets in the app.
  - Show the tweet after tweeting.
  - Reply to a tweet.
