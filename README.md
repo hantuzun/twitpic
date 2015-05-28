@@ -17,14 +17,14 @@ http://slides.com/emrehan/twitpic
 
 
 ## To Do
- - Write tests.
- - Open tweets in the app.
- - Show the tweet after tweeting.
- - Reply to a tweet.
- - Find a way to redirect the user from twitter application to twitpic for just tweeting.
- - Extract mentions, hashtags and links from the tweet and add as a normal text in tweet composer.
-  - This item is done partially on the server side. Need to add UI feature.
- - Support to add images into HugeTwit.
+ - [ ] Write tests.
+ - [ ] Open tweets in the app.
+ - [ ] Show the tweet after tweeting.
+ - [ ] Reply to a tweet.
+ - [ ] Find a way to redirect the user from twitter application to twitpic for just tweeting.
+ - [ ] Extract mentions, hashtags and links from the tweet and add as a normal text in tweet composer.
+   - This item is done partially on the server side. Need to add UI feature.
+ - [ ] Support to add images into HugeTwit.
  
 
 * * *
