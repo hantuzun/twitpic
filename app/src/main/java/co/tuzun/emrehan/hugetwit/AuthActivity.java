@@ -1,7 +1,6 @@
-package co.tuzun.emrehan.twitpic;
+package co.tuzun.emrehan.hugetwit;
 
 import android.content.Intent;
-import android.graphics.drawable.AnimationDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
@@ -11,19 +10,14 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.Toast;
-import android.widget.VideoView;
 
+import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
 import com.twitter.sdk.android.core.TwitterSession;
 import com.twitter.sdk.android.core.identity.TwitterLoginButton;
-import com.twitter.sdk.android.core.models.User;
 
 import java.io.IOException;
 
@@ -40,7 +34,6 @@ public class AuthActivity extends ActionBarActivity implements SurfaceHolder.Cal
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_auth);
 
-        getSupportActionBar().hide();
         mSurfaceView = (SurfaceView)findViewById(R.id.surface);
         mp = new MediaPlayer();
 
@@ -53,9 +46,7 @@ public class AuthActivity extends ActionBarActivity implements SurfaceHolder.Cal
         loginButton.setCallback(new Callback<TwitterSession>() {
             @Override
             public void success(Result<TwitterSession> result) {
-                intent = new Intent(getApplicationContext(), TimelineActivity.class);
-                startActivity(intent);
-                finish();
+                gotoActivity();
             }
 
             @Override
@@ -65,6 +56,17 @@ public class AuthActivity extends ActionBarActivity implements SurfaceHolder.Cal
                         Toast.LENGTH_SHORT).show();
             }
         });
+
+        TwitterSession session = Twitter.getSessionManager().getActiveSession();
+        if(session != null){
+            gotoActivity();
+        }
+    }
+
+    private void gotoActivity() {
+        intent = new Intent(getApplicationContext(), TimelineActivity.class);
+        startActivity(intent);
+        finish();
     }
 
     @Override

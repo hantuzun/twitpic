@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">TwitPic</string>
+    <string name="app_name">Hugetwit</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -8,4 +8,7 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="timeline_empty">There is nothing here</string>
     <string name="title_activity_success">SuccessActivity</string>
+    <string name="your_timeline">Your last tweets</string>
+    <string name="generating_image">Preparing your hugetwit</string>
+    <string name="hugetwit_hint">Write your tweet without limits. Then, Hugetwit it!</string>
 </resources>

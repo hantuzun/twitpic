@@ -1,4 +1,4 @@
-package co.tuzun.emrehan.twitpic.ApiUtils;
+package co.tuzun.emrehan.hugetwit.ApiUtils;
 
 import android.content.Context;
 import android.os.AsyncTask;
@@ -8,7 +8,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
-import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.client.methods.HttpUriRequest;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -25,16 +24,14 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URL;
-import java.net.URLDecoder;
 import java.util.ArrayList;
 import java.util.List;
 
-import co.tuzun.emrehan.twitpic.App;
+import co.tuzun.emrehan.hugetwit.App;
 
 public class ApiTask extends AsyncTask<String, String, Void> {
     private static final String TAG = "apitask";
     private static final int POST_TWEET = 1;
-    private static final int GET_MY_TWEETS = 2;
 
     private ApiListener listener;
     private Context con;
@@ -121,9 +118,6 @@ public class ApiTask extends AsyncTask<String, String, Void> {
                     }
 
                 }
-                else if(apiRequest == GET_MY_TWEETS){
-
-                }
                 publishProgress("success", text);
             }
             else{
@@ -144,14 +138,12 @@ public class ApiTask extends AsyncTask<String, String, Void> {
         Log.d("tasks", "last visited " + apiRequest);
         try {
             if (apiRequest == POST_TWEET) {
-                httpUriRequest = new HttpPost("http://halilibo.com/twitpic/");
+                httpUriRequest = new HttpPost("http://halilibo.com:12000/maketwit");
 
                 List<NameValuePair> nameValuePairs = new ArrayList<NameValuePair>(1);
                 nameValuePairs.add(new BasicNameValuePair("message", params[0]));
                 ((HttpPost) httpUriRequest).setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
-            } else if (apiRequest == GET_MY_TWEETS) {
-                httpUriRequest = new HttpGet("http://halilibo.com/twitpic/tweets/" + URLDecoder.decode(params[0], "utf-8"));
             }
         } catch (UnsupportedEncodingException e) {
             e.printStackTrace();
@@ -167,11 +159,5 @@ public class ApiTask extends AsyncTask<String, String, Void> {
         task.run();
     }
 
-    public static void getMyTweets(final Context con, final ApiListener listener, String uid) {
-        ApiTask task = new ApiTask(con, listener);
-        task.setApiRequest(GET_MY_TWEETS);
-        task.setParams(uid);
-        task.run();
-    }
 
 }

@@ -1,17 +1,11 @@
-package co.tuzun.emrehan.twitpic;
+package co.tuzun.emrehan.hugetwit;
 
 import android.app.Activity;
 import android.app.ProgressDialog;
-import android.content.Context;
-import android.content.ContextWrapper;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
-import android.os.AsyncTask;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -21,33 +15,25 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.twitter.sdk.android.Twitter;
+import com.squareup.picasso.Picasso;
 import com.twitter.sdk.android.core.Callback;
 import com.twitter.sdk.android.core.Result;
-import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterException;
-import com.twitter.sdk.android.core.identity.TwitterLoginButton;
 import com.twitter.sdk.android.core.models.User;
-import com.twitter.sdk.android.core.services.AccountService;
 import com.twitter.sdk.android.tweetcomposer.TweetComposer;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 
-import co.tuzun.emrehan.twitpic.ApiUtils.ApiListener;
-import co.tuzun.emrehan.twitpic.ApiUtils.ApiTask;
-import co.tuzun.emrehan.twitpic.ApiUtils.MyTwitterApiClient;
+import co.tuzun.emrehan.hugetwit.ApiUtils.ApiListener;
+import co.tuzun.emrehan.hugetwit.ApiUtils.ApiTask;
+import co.tuzun.emrehan.hugetwit.ApiUtils.MyTwitterApiClient;
 
 
-public class TweetActivity extends ActionBarActivity {
+public class TweetActivity extends AppCompatActivity {
 
     private static final int TWEET_COMPOSER_REQUEST_CODE = 145;
 
@@ -65,8 +51,11 @@ public class TweetActivity extends ActionBarActivity {
         setContentView(R.layout.activity_tweet);
 
         tweetpicButton = (Button) findViewById(R.id.tweetpic_button);
+        userImage = (ImageView) findViewById(R.id.userpicture_imageview);
+        userName = (TextView) findViewById(R.id.tweetpic_userName);
+        userHandle = (TextView) findViewById(R.id.tweetpic_userHandle);
+
         generatingDialog = new ProgressDialog(this);
-        getSupportActionBar().hide();
 
         editText = (EditText) findViewById(R.id.tweetpic_text);
 
@@ -77,21 +66,18 @@ public class TweetActivity extends ActionBarActivity {
         super.onPostResume();
 
         Long uid = App.getTwitterSession().getUserId();
-        new MyTwitterApiClient(App.getTwitterSession()).getUsersService().show(uid, null, true,
+        new MyTwitterApiClient(App.getTwitterSession()).getUsersService().show(uid, true,
                 new Callback<User>() {
                     @Override
                     public void success(Result<User> result) {
 
-                        userName = (TextView) findViewById(R.id.tweetpic_userName);
                         userName.setText(result.data.name);
-
-                        userHandle = (TextView) findViewById(R.id.tweetpic_userHandle);
                         userHandle.setText("@" + result.data.screenName);
 
                         Log.d("twittercommunity", "user's profile url is "
                                 + result.data.profileImageUrlHttps);
 
-                        new InstallImage().execute(result.data.profileImageUrlHttps);
+                        Picasso.with(TweetActivity.this).load(result.data.profileImageUrlHttps).placeholder(R.mipmap.ic_launcher).into(userImage);
                     }
 
                     @Override
@@ -105,7 +91,7 @@ public class TweetActivity extends ActionBarActivity {
         tweetpicButton.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 // Create generating dialog
-                generatingDialog.setMessage("Generating TweetPic Image...");
+                generatingDialog.setMessage(getString(R.string.generating_image));
                 generatingDialog.setIndeterminate(true);
                 generatingDialog.setCancelable(false);
                 generatingDialog.show();
@@ -184,34 +170,6 @@ public class TweetActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-
-    private class InstallImage extends AsyncTask<String, Void, Boolean> {
-        private Bitmap bitmap;
-        @Override
-        protected Boolean doInBackground(String... params) {
-            try {
-                bitmap = BitmapFactory.decodeStream((InputStream) new URL(params[0]).getContent());
-                return true;
-            } catch (Exception e) {
-                return false;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-            if (result == true) {
-                userImage = (ImageView) findViewById(R.id.tweetpic_userPicture);
-                userImage.setImageBitmap(bitmap);
-            }
-        }
-
-        @Override
-        protected void onPreExecute() {}
-
-        @Override
-        protected void onProgressUpdate(Void... values) {}
     }
 }
 

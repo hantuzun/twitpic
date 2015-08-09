@@ -1,4 +1,4 @@
-package co.tuzun.emrehan.twitpic;
+package co.tuzun.emrehan.hugetwit;
 
 import android.app.Application;
 import android.content.ContextWrapper;
@@ -6,7 +6,6 @@ import android.content.ContextWrapper;
 import com.twitter.sdk.android.Twitter;
 import com.twitter.sdk.android.core.TwitterAuthConfig;
 import com.twitter.sdk.android.core.TwitterAuthToken;
-import com.twitter.sdk.android.core.TwitterCore;
 import com.twitter.sdk.android.core.TwitterSession;
 
 import java.io.File;

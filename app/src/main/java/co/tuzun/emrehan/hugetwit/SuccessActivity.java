@@ -1,4 +1,4 @@
-package co.tuzun.emrehan.twitpic;
+package co.tuzun.emrehan.hugetwit;
 
 // EmbeddedTweetsActivity
 import com.twitter.sdk.android.core.models.Tweet;

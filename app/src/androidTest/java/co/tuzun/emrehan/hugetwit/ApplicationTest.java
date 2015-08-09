@@ -1,4 +1,4 @@
-package co.tuzun.emrehan.twitpic;
+package co.tuzun.emrehan.hugetwit;
 
 import android.app.Application;
 import android.test.ApplicationTestCase;

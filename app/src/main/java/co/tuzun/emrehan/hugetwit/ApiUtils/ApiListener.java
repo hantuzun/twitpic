@@ -1,4 +1,4 @@
-package co.tuzun.emrehan.twitpic.ApiUtils;
+package co.tuzun.emrehan.hugetwit.ApiUtils;
 
 /**
  * Created by absolute on 20.09.2014.
